@@ -1,0 +1,32 @@
+.dashBoard-container {
+    width: 70%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    margin-top: 32px;   
+}
+
+.dashboard-item {
+    display: flex;
+    justify-content: center ;
+    align-items: center;
+}
+
+.timer-image {
+    width:100px;
+    height: 100px;
+}
+
+.lifetime {
+    margin-right: 10px;
+}
+
+.life-image {
+    width:112px;
+    height:112px;
+}
+
+.life {
+    margin-left: -8px;
+}

@@ -1,14 +1,14 @@
 import React from 'react'
 import { Route } from 'react-router-dom'
-import Home from '../pages/Home'
-import Game from '../pages/Game'
-import End from '../pages/End'
+import Home from './Home/index'
+import PlayGround from './PlayGround/index'
+import End from './End/index'
 
 const App = () => {
     return (
-        <div>
+        <div className = "fill-height">
             <Route exact path="/" component={Home}/>
-            <Route path="/Game" component={Game}/>
+            <Route path="/Play-ground" component={PlayGround}/>
             <Route path="/End" component={End}/>
         </div>
     )

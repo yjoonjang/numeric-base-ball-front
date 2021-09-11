@@ -1,0 +1,109 @@
+.game-section {
+    width: 600px !important;
+    height: 668px !important;
+    border: black 3px solid !important;
+    border-radius: 5%;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type=number] {
+    -moz-appearance: textfield;
+  }
+
+.strikeBallLine {
+    border: 3px solid black;
+    width: 50px;
+    height: 50px;
+    border-radius: 50px;
+}
+
+.ballBallLine {
+    border: 3px solid black;
+    width: 50px;
+    height: 50px;
+    border-radius: 50px;
+}
+
+.outBallLine {
+    border: 3px solid black;
+    width: 50px;
+    height: 50px;
+    border-radius: 50px;
+}
+
+.strike-operation-line {
+    display: flex;
+    flex-direction: row;
+    margin-top: 60px;
+    width: 500px;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.ball-operation-line {
+    display: flex;
+    flex-direction: row;
+    margin-top: 40px;
+    width: 500px;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.out-operation-line {
+    display: flex;
+    flex-direction: row;
+    margin-top: 40px;
+    width: 500px;
+    justify-content: space-around;
+    align-items: center;
+}
+
+h2 {
+    text-align: center;
+    justify-content: center;
+}
+
+.strikeBallLine-isLightOn {
+    border: 3px solid red;
+    width: 50px;
+    height: 50px;
+    border-radius: 50px;
+    background-color: red;
+}
+
+.ballBallLine-isLightOn {
+    border: 3px solid red;
+    width: 50px;
+    height: 50px;
+    border-radius: 50px;
+    background-color: red;
+} 
+
+.outBallLine-isLightOn {
+    border: 3px solid red;
+    width: 50px;
+    height: 50px;
+    border-radius: 50px;
+    background-color: red;
+}
+
+.ScoreRecord-Container {
+    display: flex;
+    flex-direction: column;
+    border: 3px solid blue;
+    width:150px;
+    height: 100px;
+    justify-content: center;
+    align-items: center;
+    font-size: larger;
+    /* position: static;
+    top: -600px;
+    left: 600px; */
+    margin-right: auto;
+    margin-bottom: 20px;
+}
