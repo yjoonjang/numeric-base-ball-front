@@ -48,24 +48,17 @@ const PlayGround = () => {
         return answer.join('');
     });
 
-    const decreaseLife = useMemo(
-        () => () => {
-            setLife(parseInt(life) - 1);
-        },
-        [life]
-    );
+    const decreaseLife = useCallback(() => {
+        setLife(parseInt(life) - 1);
+    }, [life]);
 
-    const resetLifeTime = useMemo(
-        () => () => {
-            setLifetimeSeconds(maxLifeTimeSeconds);
-        },
-        []
-    );
+    const resetLifeTime = useCallback(() => {
+        setLifetimeSeconds(maxLifeTimeSeconds);
+    }, []);
 
-    const addRoundHistory = useMemo(
-        () => (result) => {
+    const addRoundHistory = useCallback(
+        (result) => {
             setRoundHistories(roundHistories.concat(result));
-            console.log(result);
         },
         [roundHistories]
     );
@@ -131,7 +124,6 @@ const PlayGround = () => {
                     }
                 } catch (error) {
                     alert(error);
-                    event.target.value = '';
                     return;
                 }
 
@@ -161,19 +153,24 @@ const PlayGround = () => {
         [decreaseLife, answer]
     );
 
+    const scoreRecordOperation = roundHistories.map((rounds, index) => (
+        <div className="scoreRecord-container">
+            <div>[{index + 1} 회]</div>
+            <div>입력값: {rounds.guess}</div>
+            <div>S : {rounds.strike}</div>
+            <div>B : {rounds.ball}</div>
+            <div>O : {rounds.out}</div>
+        </div>
+    ));
+
     return (
         <div className="container">
             <div className="container game-section flex-column">
                 <DashBoard life={life} lifetimeSeconds={lifetimeSeconds} />
                 <UserPanel answerLength={answerLength} handleKeyPress={handleKeyPress} />
-                <ScoredBoard
-                    strike={strike}
-                    ball={ball}
-                    out={out}
-                    answerLength={answerLength}
-                    roundHistories={roundHistories}
-                />
+                <ScoredBoard strike={strike} ball={ball} out={out} answerLength={answerLength} />
             </div>
+            <div className="flex-column">{scoreRecordOperation}</div>
         </div>
     );
 };

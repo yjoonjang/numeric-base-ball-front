@@ -1,12 +1,10 @@
 import React from 'react';
-import { useState } from 'react';
-import ScoreRecord from './ScoreRecord';
 import './index.css';
 import CircularSignal from './CircularSignal';
-import BallLine from './BallLine';
+import SymbolSign from './SymbolSign';
 
 const ScoredBoard = (props) => {
-    const { strike, ball, out, roundHistories, answerLength } = props;
+    const { strike, ball, out, answerLength } = props;
 
     const operation = [...Array(answerLength).keys()].map((circularSignalIndex) => (
         <CircularSignal
@@ -14,28 +12,14 @@ const ScoredBoard = (props) => {
             isStrikeBallLightOn={strike > circularSignalIndex}
             isBallBallLightOn={ball > circularSignalIndex}
             isOutBallLightOn={out > circularSignalIndex}
-            color="#9acd32"
-        />
-    ));
-
-    const scoreRecordOperation = roundHistories.map((rounds, index) => (
-        <ScoreRecord
-            key={index}
-            strike={rounds.strike}
-            out={rounds.out}
-            ball={rounds.ball}
-            guess={rounds.guess}
-            trial={index + 1}
+            color="#16db1c"
         />
     ));
 
     return (
-        <div>
-            <div className="signal-container">
-                <BallLine />
-                {operation}
-            </div>
-            <div className="scoreRecord-align">{scoreRecordOperation}</div>
+        <div className="signal-container">
+            <SymbolSign />
+            {operation}
         </div>
     );
 };

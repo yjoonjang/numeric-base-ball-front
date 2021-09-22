@@ -1,5 +1,3 @@
-import react from 'react';
-
 const CircularSignal = (props) => {
     const { isStrikeBallLightOn, isBallBallLightOn, isOutBallLightOn, color } = props;
 

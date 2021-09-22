@@ -15,3 +15,16 @@ input[type=number] {
     -moz-appearance: textfield;
   }
 
+.scoreRecord-container {
+  width: 120px;
+  height: 120px;
+  border: 3px solid #16db1c;
+  border-radius: 5px;
+  justify-content: center;
+  align-items: center;  
+  font-family: 'Stylish', sans-serif;  
+  font-size: 20px;
+  margin-bottom: 20px;
+  margin-left: 20px;
+  padding-left: 5px;
+}
