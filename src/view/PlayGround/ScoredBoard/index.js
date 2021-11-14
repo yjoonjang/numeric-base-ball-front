@@ -1,7 +1,7 @@
 import React from 'react';
 import './index.css';
-import CircularSignal from './CircularSignal';
-import SymbolSign from './SymbolSign';
+import CircularSignal from '../Components/CircularSignal';
+import SymbolSign from '../Components/SymbolSign';
 
 const ScoredBoard = (props) => {
     const { strike, ball, out, answerLength } = props;

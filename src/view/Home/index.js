@@ -2,22 +2,29 @@ import { useHistory } from 'react-router-dom';
 import { useCallback, useState, useEffect } from 'react';
 import './index.css';
 import axios from 'axios';
+import { useCookies } from 'react-cookie';
+import Login from '../Login';
 
-const Home = () => {
-    const [user, setUser] = useState(null);
+const Home = (props) => {
+    const [cookies, setCookie, removeCookie] = useCookies(['data']);
 
     useEffect(() => {
-        axios.get('http://localhost:65100/user').then((res) => {
-            const result = res.data;
-            if (result.length > 0) {
-                setUser(result[0]);
-            } else {
-                setUser(null);
-            }
-        });
-        return;
+        // axios.get('http://localhost:65100/user').then((res) => {
+        //     const result = res.data;
+        //     console.log(result);
+        //     if (result.length > 0) {
+        //         setUser(result[0]);
+        //     } else {
+        //         setUser(null);
+        //     }
+        // });
+        // return;
     }, []);
 
+    const onLogout = () => {
+        removeCookie('data');
+        alert('로그아웃 되었습니다.');
+    };
     const history = useHistory();
     const onGameStartButtonClick = useCallback(() => {
         history.push('/Play-ground');
@@ -32,15 +39,24 @@ const Home = () => {
     return (
         <div className="container flex-column">
             <div className="game-name">숫자 야구</div>
-            <button className="game-start-button" onClick={onGameStartButtonClick}>
-                {user?.nickname}님의 게임 시작
-            </button>
+            {!cookies.data ? (
+                <button className="game-start-button" onClick={onGameStartButtonClick}>
+                    비로그인으로 게임 시작
+                </button>
+            ) : (
+                <button className="game-start-button" onClick={onGameStartButtonClick}>
+                    {cookies.data.nickname}님의 게임 시작
+                </button>
+            )}
             <div className="flex Join-Login-btn" style={{ marginTop: -16 }}>
                 <button className="game-start-button" onClick={onCreateAccount}>
                     회원가입
                 </button>
                 <button className="game-start-button" onClick={onLogin}>
                     로그인
+                </button>
+                <button className="game-start-button" onClick={onLogout}>
+                    로그아웃
                 </button>
             </div>
         </div>

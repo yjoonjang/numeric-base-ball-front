@@ -1,0 +1,20 @@
+.validation-form-container {
+    display: flex;
+    flex-direction: column;
+    width:400px;
+    margin-left: 12px;
+}
+
+input {
+    height: 24px
+}
+
+.validation-text-input {
+    width: 100%;
+}
+
+.error-message {
+    color:red;
+    font-size: small;
+    font-weight: 600;
+}

@@ -1,13 +1,16 @@
 import DashBoard from './DashBoard';
 import UserPanel from './UserPanel';
 import ScoredBoard from './ScoredBoard';
-import { useState, useEffect, useCallback, useMemo } from 'react';
+import { useState, useEffect, useCallback, useMemo, createContext } from 'react';
 import './index.css';
 import { useHistory } from 'react-router-dom';
+import { useCookies } from 'react-cookie';
+import axios from 'axios';
 
 const maxLifeTimeSeconds = 59;
 const maxLife = 100;
 const PlayGround = () => {
+    const [cookies, setCookie, removeCookie] = useCookies(['data']);
     const [answerLength] = useState(4);
     const [answer, setAnswer] = useState('');
     const [lifetimeSeconds, setLifetimeSeconds] = useState(maxLifeTimeSeconds);
@@ -16,7 +19,19 @@ const PlayGround = () => {
     const [ball, setBall] = useState(0);
     const [out, setOut] = useState(0);
     const [roundHistories, setRoundHistories] = useState([]);
+    const [rankHistories, setRankHistories] = useState([]);
+    // const [finalScore, setFinalScore] = useState(1000);
+    const finalScore = life * 10;
+    const [currentNickname, setCurrentNickname] = useState();
     const history = useHistory();
+
+    useEffect(() => {
+        if (!cookies.data) {
+            setCurrentNickname('UNDEFINED');
+        } else {
+            setCurrentNickname(cookies.data.nickname);
+        }
+    });
 
     //초기화
     useEffect(() => {
@@ -36,6 +51,7 @@ const PlayGround = () => {
         }
     }, [lifetimeSeconds, life]);
 
+    //랜덤으로 답 생성
     const generateAnswer = useMemo(() => () => {
         const arr = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
 
@@ -59,8 +75,18 @@ const PlayGround = () => {
     const addRoundHistory = useCallback(
         (result) => {
             setRoundHistories(roundHistories.concat(result));
+            return;
         },
         [roundHistories]
+    );
+
+    const addRankHistory = useCallback(
+        (results) => {
+            const ret = { ...rankHistories, results };
+            setRankHistories(ret);
+            return ret;
+        },
+        [rankHistories]
     );
 
     useEffect(() => {
@@ -74,7 +100,16 @@ const PlayGround = () => {
                 history.push('/End');
             }
         }
-    }, [life]);
+        // window.addEventListener('input', (event) => {
+        //     let guess = event.target.value;
+        //     if (answer === guess) {
+        //         const results = { finalScore: finalScore, currentNickname: currentNickname };
+        //         // rankHistories.concat({ ...rankHistories, finalScore, currentNickname });
+        //         setRankHistories((rankHistories) => [...rankHistories, results]);
+        //         console.log(rankHistories);
+        //     }
+        // });
+    }, [life, rankHistories]);
 
     const checkIfDuplicateGuess = (guess) => {
         for (let guessIndex = 0; guessIndex < guess.length; guessIndex++) {
@@ -108,6 +143,36 @@ const PlayGround = () => {
         return { strike: _strike, ball: _ball, out: _out };
     };
 
+    const setRank = useCallback(() => {
+        // const rankList = [];
+        // console.log(newRankHistories);
+        // for (let rankIndex = 0; rankIndex <= rankHistories.length; rankIndex += 1) {
+        //     rankList.push(rankHistories[rankIndex].results.finalScore);
+        // }
+        // const rank1 = Math.max(rankList);
+        // const rank1NickName = rankHistories[rankList.indexOf(rank1)].results.nickname;
+        // const rank2 = Math.max(rankList.pop(rank1));
+        // const rank2NickName = rankHistories[rankList.indexOf(rank2)].results.nickname;
+        // const rank3 = Math.max(rankList.pop(rank1, rank2));
+        // const rank3NickName = rankHistories[rankList.indexOf(rank3)].results.nickname;
+        // rankList.pop(rank3);
+        // return {
+        //     rank1: rank1,
+        //     rank1NickName: rank1NickName,
+        //     rank2: rank2,
+        //     rank2NickName: rank2NickName,
+        //     rank3: rank3,
+        //     ran3kNickName: rank3NickName,
+        // };
+    }, []);
+
+    // const getRank = rankHistories.map((rounds) => {
+    //     return {
+    //         finalScore: rounds.finalScore,
+    //         nickname: rounds.nickname,
+    //     };
+    // });
+
     const handleKeyPress = useCallback(
         (event) => {
             let guess = event.target.value;
@@ -128,11 +193,76 @@ const PlayGround = () => {
                 }
 
                 if (answer === guess) {
-                    if (window.confirm('홈런! 게임을 한판 더 하시겠습니까?') === true) {
-                        history.go();
-                    } else {
-                        history.push('/End');
-                    }
+                    // history.push({pathname:'/auth', state: finalScore });
+                    // axios.post('http://localhost:65100/join', finalScore).then(() => {
+                    //     console.log('최종 스코어 전달 완료');
+                    // });
+                    axios
+                        .post('http://localhost:65100/rank', {
+                            finalScore: finalScore,
+                            currentNickname: currentNickname,
+                        })
+                        .then(() => {
+                            if (window.confirm('홈런! 게임을 한판 더 하시겠습니까?') === true) {
+                                history.go();
+                            } else {
+                                history.push({
+                                    pathname: '/End',
+                                    state: {
+                                        finalScore: finalScore,
+                                        nickname: currentNickname,
+                                    },
+                                });
+                            }
+                        })
+                        .catch((error) => {
+                            console.log(error);
+                        });
+
+                    // const rank = rankHistories.concat(finalScore, currentNickname);
+                    // getFinalScore();
+                    // console.log(finalScore);
+                    // console.log(currentNickname);
+                    // const newRankHistories = addRankHistory({
+                    //     finalScore,
+                    //     currentNickname,
+                    // });
+                    // const rankList = [];
+                    // rankList.push(newRankHistories.results.finalScore, newRankHistories.results.currentNickname);
+                    // console.log(rankList);
+                    // setRankHistories(...rankHistories, { finalScore, currentNickname });
+                    // console.log(rankHistories);
+                    // setRank();
+                    // const rankList = [];
+                    // for (let rankIndex = 0; rankIndex <= newRankHistories.length; rankIndex += 1) {
+                    //     rankList.push(newRankHistories[rankIndex].results.finalScore);
+                    // }
+                    // const rank1 = Math.max(rankList);
+                    // const rank1NickName = newRankHistories[rankList.indexOf(rank1)].results.nickname;
+                    // const rank2 = Math.max(rankList.pop(rank1));
+                    // const rank2NickName = newRankHistories[rankList.indexOf(rank2)].results.nickname;
+                    // const rank3 = Math.max(rankList.pop(rank1, rank2));
+                    // const rank3NickName = newRankHistories[rankList.indexOf(rank3)].results.nickname;
+                    // rankList.pop(rank3);
+                    // return {
+                    //     rank1: rank1,
+                    //     rank1NickName: rank1NickName,
+                    //     rank2: rank2,
+                    //     rank2NickName: rank2NickName,
+                    //     rank3: rank3,
+                    //     ran3kNickName: rank3NickName,
+                    // };
+                    // if (window.confirm('홈런! 게임을 한판 더 하시겠습니까?') === true) {
+                    //     history.go();
+                    // } else {
+                    //     history.push({
+                    //         pathname: '/End',
+                    //         state: {
+                    //             finalScore: finalScore,
+                    //             nickname: currentNickname,
+                    //         },
+                    //     });
+                    // }
                 } else {
                     const { strike, ball, out } = getScore(guess, answer);
 
@@ -147,10 +277,11 @@ const PlayGround = () => {
                         out,
                         guess,
                     });
+                    // console.log(newRoundHistories);
                 }
             }
         },
-        [decreaseLife, answer]
+        [decreaseLife, answer, life, finalScore]
     );
 
     const scoreRecordOperation = roundHistories.map((rounds, index) => (

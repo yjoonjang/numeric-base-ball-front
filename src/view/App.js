@@ -5,6 +5,8 @@ import CreateAccount from './CreateAccount/index';
 import Login from './Login';
 import PlayGround from './PlayGround/index';
 import End from './End/index';
+import { Ranking } from './Ranking';
+import { ScorePage } from './PlayGround/Components/ScorePage';
 
 const App = () => {
     return (
@@ -14,6 +16,7 @@ const App = () => {
             <Route path="/Login" component={Login} />
             <Route path="/Play-ground" component={PlayGround} />
             <Route path="/End" component={End} />
+            <Route path="/Ranking" component={Ranking} />
         </div>
     );
 };
