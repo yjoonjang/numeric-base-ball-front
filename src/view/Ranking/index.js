@@ -1,20 +1,31 @@
-import React, { useCallback } from 'react';
 import './index.css';
 import { useLocation } from 'react-router';
-import { set } from 'js-cookie';
 
 export function Ranking() {
     const location = useLocation();
-    const setRank = location.state.setRank;
-    const { rank1, rank1NickName, rank2, rank2NickName, rank3, rank3NickName } = setRank();
+    const highestScore = location.state.highestScore;
+    const highestScoreNicknameList = location.state.highestScoreNicknameList;
+    const secondHighestScore = location.state.secondHighestScore;
+    const secondHighestScoreNicknameList = location.state.secondHighestScoreNicknameList;
+    const thirdHighestScore = location.state.thirdHighestScore;
+    const thirdHighestScoreNicknameList = location.state.thirdHighestScoreNicknameList;
+    console.log(highestScoreNicknameList);
 
     return (
         <div className="Ranking-container">
             <div className="Ranking-form flex-column">
-                <h1>명예의 전당</h1>
-                rank1 : {rank1NickName} {rank1}
-                rank2 : {rank2NickName} {rank2}
-                rank3 : {rank3NickName} {rank2}
+                <h1 style={{ marginTop: 100 }}>명예의 전당</h1>
+                <div className="Ranking-spot flex-column">
+                    <div>
+                        {highestScore} : {highestScoreNicknameList}
+                    </div>
+                    <div>
+                        {secondHighestScore} : {secondHighestScoreNicknameList}
+                    </div>
+                    <div>
+                        {thirdHighestScore} : {thirdHighestScoreNicknameList}
+                    </div>
+                </div>
             </div>
         </div>
     );

@@ -193,16 +193,23 @@ const PlayGround = () => {
                 }
 
                 if (answer === guess) {
-                    // history.push({pathname:'/auth', state: finalScore });
-                    // axios.post('http://localhost:65100/join', finalScore).then(() => {
-                    //     console.log('최종 스코어 전달 완료');
-                    // });
                     axios
                         .post('http://localhost:65100/rank', {
                             finalScore: finalScore,
                             currentNickname: currentNickname,
                         })
-                        .then(() => {
+                        .then((res) => {
+                            const {
+                                highestScore,
+                                highestScoreNicknameList,
+                                secondHighestScore,
+                                secondHighestScoreNicknameList,
+                                thirdHighestScore,
+                                thirdHighestScoreNicknameList,
+                            } = res.data;
+
+                            console.log(highestScoreNicknameList);
+
                             if (window.confirm('홈런! 게임을 한판 더 하시겠습니까?') === true) {
                                 history.go();
                             } else {
@@ -211,6 +218,12 @@ const PlayGround = () => {
                                     state: {
                                         finalScore: finalScore,
                                         nickname: currentNickname,
+                                        highestScore: highestScore,
+                                        highestScoreNicknameList: highestScoreNicknameList,
+                                        secondHighestScore: secondHighestScore,
+                                        secondHighestScoreNicknameList: secondHighestScoreNicknameList,
+                                        thirdHighestScore: thirdHighestScore,
+                                        thirdHighestScoreNicknameList: thirdHighestScoreNicknameList,
                                     },
                                 });
                             }
@@ -218,51 +231,6 @@ const PlayGround = () => {
                         .catch((error) => {
                             console.log(error);
                         });
-
-                    // const rank = rankHistories.concat(finalScore, currentNickname);
-                    // getFinalScore();
-                    // console.log(finalScore);
-                    // console.log(currentNickname);
-                    // const newRankHistories = addRankHistory({
-                    //     finalScore,
-                    //     currentNickname,
-                    // });
-                    // const rankList = [];
-                    // rankList.push(newRankHistories.results.finalScore, newRankHistories.results.currentNickname);
-                    // console.log(rankList);
-                    // setRankHistories(...rankHistories, { finalScore, currentNickname });
-                    // console.log(rankHistories);
-                    // setRank();
-                    // const rankList = [];
-                    // for (let rankIndex = 0; rankIndex <= newRankHistories.length; rankIndex += 1) {
-                    //     rankList.push(newRankHistories[rankIndex].results.finalScore);
-                    // }
-                    // const rank1 = Math.max(rankList);
-                    // const rank1NickName = newRankHistories[rankList.indexOf(rank1)].results.nickname;
-                    // const rank2 = Math.max(rankList.pop(rank1));
-                    // const rank2NickName = newRankHistories[rankList.indexOf(rank2)].results.nickname;
-                    // const rank3 = Math.max(rankList.pop(rank1, rank2));
-                    // const rank3NickName = newRankHistories[rankList.indexOf(rank3)].results.nickname;
-                    // rankList.pop(rank3);
-                    // return {
-                    //     rank1: rank1,
-                    //     rank1NickName: rank1NickName,
-                    //     rank2: rank2,
-                    //     rank2NickName: rank2NickName,
-                    //     rank3: rank3,
-                    //     ran3kNickName: rank3NickName,
-                    // };
-                    // if (window.confirm('홈런! 게임을 한판 더 하시겠습니까?') === true) {
-                    //     history.go();
-                    // } else {
-                    //     history.push({
-                    //         pathname: '/End',
-                    //         state: {
-                    //             finalScore: finalScore,
-                    //             nickname: currentNickname,
-                    //         },
-                    //     });
-                    // }
                 } else {
                     const { strike, ball, out } = getScore(guess, answer);
 

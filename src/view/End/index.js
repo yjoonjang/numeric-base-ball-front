@@ -9,7 +9,12 @@ const End = (props) => {
     const location = useLocation();
     const finalScore = location.state.finalScore;
     const nickname = location.state.nickname;
-    // const sendScore = useContext(finalScore);
+    const highestScore = location.state.highestScore;
+    const highestScoreNicknameList = location.state.highestScoreNicknameList;
+    const secondHighestScore = location.state.secondHighestScore;
+    const secondHighestScoreNicknameList = location.state.secondHighestScoreNicknameList;
+    const thirdHighestScore = location.state.thirdHighestScore;
+    const thirdHighestScoreNicknameList = location.state.thirdHighestScoreNicknameList;
 
     const history = useHistory();
 
@@ -22,12 +27,19 @@ const End = (props) => {
     }, [history]);
 
     const onWatchRankingButtonClick = useCallback(() => {
-        history.push({ pathname: '/Ranking' });
+        history.push({
+            pathname: '/Ranking',
+            state: {
+                nickname: nickname,
+                highestScore: highestScore,
+                highestScoreNicknameList: highestScoreNicknameList,
+                secondHighestScore: secondHighestScore,
+                secondHighestScoreNicknameList: secondHighestScoreNicknameList,
+                thirdHighestScore: thirdHighestScore,
+                thirdHighestScoreNicknameList: thirdHighestScoreNicknameList,
+            },
+        });
     });
-
-    useEffect(() => {
-        return;
-    }, []);
 
     return (
         <div className="container flex-column">
