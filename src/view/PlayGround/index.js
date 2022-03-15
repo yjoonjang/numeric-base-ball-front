@@ -6,12 +6,14 @@ import './index.css';
 import { useHistory } from 'react-router-dom';
 import { useCookies } from 'react-cookie';
 import axios from 'axios';
+import { data } from 'autoprefixer';
+import { set } from 'js-cookie';
+import { useLocation } from 'react-router-dom/cjs/react-router-dom.min';
 
 const maxLifeTimeSeconds = 59;
 const maxLife = 100;
-const PlayGround = () => {
+const PlayGround = (event) => {
     const [cookies, setCookie, removeCookie] = useCookies(['data']);
-    const [answerLength] = useState(4);
     const [answer, setAnswer] = useState('');
     const [lifetimeSeconds, setLifetimeSeconds] = useState(maxLifeTimeSeconds);
     const [life, setLife] = useState(maxLife);
@@ -20,10 +22,13 @@ const PlayGround = () => {
     const [out, setOut] = useState(0);
     const [roundHistories, setRoundHistories] = useState([]);
     const [rankHistories, setRankHistories] = useState([]);
-    // const [finalScore, setFinalScore] = useState(1000);
     const finalScore = life * 10;
     const [currentNickname, setCurrentNickname] = useState();
+    const [gamePlayTime, setGamePlayTime] = useState('');
     const history = useHistory();
+    const location = useLocation();
+
+    const answerLength = location.state.answerLength;
 
     useEffect(() => {
         if (!cookies.data) {
@@ -80,15 +85,6 @@ const PlayGround = () => {
         [roundHistories]
     );
 
-    const addRankHistory = useCallback(
-        (results) => {
-            const ret = { ...rankHistories, results };
-            setRankHistories(ret);
-            return ret;
-        },
-        [rankHistories]
-    );
-
     useEffect(() => {
         if (life <= 0) {
             if (
@@ -100,15 +96,6 @@ const PlayGround = () => {
                 history.push('/End');
             }
         }
-        // window.addEventListener('input', (event) => {
-        //     let guess = event.target.value;
-        //     if (answer === guess) {
-        //         const results = { finalScore: finalScore, currentNickname: currentNickname };
-        //         // rankHistories.concat({ ...rankHistories, finalScore, currentNickname });
-        //         setRankHistories((rankHistories) => [...rankHistories, results]);
-        //         console.log(rankHistories);
-        //     }
-        // });
     }, [life, rankHistories]);
 
     const checkIfDuplicateGuess = (guess) => {
@@ -125,58 +112,10 @@ const PlayGround = () => {
 
     const checkIfProperLengthGuess = (guess) => guess.length === answer.length;
 
-    const getScore = (guess, answer) => {
-        let _strike = 0;
-        let _ball = 0;
-        let _out = 0;
-
-        for (let answerIndex = 0; answerIndex < guess.length; answerIndex++) {
-            if (answer[answerIndex] === guess[answerIndex]) {
-                _strike += 1;
-            } else if (guess.includes(answer[answerIndex])) {
-                _ball += 1;
-            } else {
-                _out += 1;
-            }
-        }
-
-        return { strike: _strike, ball: _ball, out: _out };
-    };
-
-    const setRank = useCallback(() => {
-        // const rankList = [];
-        // console.log(newRankHistories);
-        // for (let rankIndex = 0; rankIndex <= rankHistories.length; rankIndex += 1) {
-        //     rankList.push(rankHistories[rankIndex].results.finalScore);
-        // }
-        // const rank1 = Math.max(rankList);
-        // const rank1NickName = rankHistories[rankList.indexOf(rank1)].results.nickname;
-        // const rank2 = Math.max(rankList.pop(rank1));
-        // const rank2NickName = rankHistories[rankList.indexOf(rank2)].results.nickname;
-        // const rank3 = Math.max(rankList.pop(rank1, rank2));
-        // const rank3NickName = rankHistories[rankList.indexOf(rank3)].results.nickname;
-        // rankList.pop(rank3);
-        // return {
-        //     rank1: rank1,
-        //     rank1NickName: rank1NickName,
-        //     rank2: rank2,
-        //     rank2NickName: rank2NickName,
-        //     rank3: rank3,
-        //     ran3kNickName: rank3NickName,
-        // };
-    }, []);
-
-    // const getRank = rankHistories.map((rounds) => {
-    //     return {
-    //         finalScore: rounds.finalScore,
-    //         nickname: rounds.nickname,
-    //     };
-    // });
-
     const handleKeyPress = useCallback(
         (event) => {
+            let playTime;
             let guess = event.target.value;
-
             if (event.keyCode === 13) {
                 event.target.value = '';
                 try {
@@ -191,13 +130,18 @@ const PlayGround = () => {
                     alert(error);
                     return;
                 }
-
                 if (answer === guess) {
+                    // 총 게임한 시간 구하기
                     axios
-                        .post('http://localhost:65100/rank', {
-                            finalScore: finalScore,
-                            currentNickname: currentNickname,
-                        })
+                        .post('http://localhost:65100/gameEnd', { id: cookies.data.id, score: finalScore })
+                        .then((res) => {
+                            const { RUN_TIME } = res.data[0];
+                            playTime = `${RUN_TIME}초`;
+                        });
+
+                    // 랭킹 구하기
+                    axios
+                        .post('http://localhost:65100/rank')
                         .then((res) => {
                             const {
                                 highestScore,
@@ -207,8 +151,8 @@ const PlayGround = () => {
                                 thirdHighestScore,
                                 thirdHighestScoreNicknameList,
                             } = res.data;
-
-                            console.log(highestScoreNicknameList);
+                            console.log(res.data);
+                            // console.log(highestScore);
 
                             if (window.confirm('홈런! 게임을 한판 더 하시겠습니까?') === true) {
                                 history.go();
@@ -217,6 +161,8 @@ const PlayGround = () => {
                                     pathname: '/End',
                                     state: {
                                         finalScore: finalScore,
+                                        gamePlayTime: playTime,
+                                        answerLength: answerLength,
                                         nickname: currentNickname,
                                         highestScore: highestScore,
                                         highestScoreNicknameList: highestScoreNicknameList,
@@ -231,45 +177,56 @@ const PlayGround = () => {
                         .catch((error) => {
                             console.log(error);
                         });
+                    // 정답이 아닐 경우
                 } else {
-                    const { strike, ball, out } = getScore(guess, answer);
-
-                    setStrike(strike);
-                    setBall(ball);
-                    setOut(out);
-                    decreaseLife();
-                    resetLifeTime();
-                    addRoundHistory({
-                        strike,
-                        ball,
-                        out,
-                        guess,
-                    });
-                    // console.log(newRoundHistories);
+                    axios
+                        .post('http://localhost:65100/game', {
+                            id: cookies.data.id,
+                            nickname: currentNickname,
+                            answer: answer,
+                            guess: guess,
+                        })
+                        .then((res) => {
+                            // const index = res.data.length;
+                            const { guess, strike_count, ball_count, out_count } = res.data[0];
+                            setStrike(strike_count);
+                            setBall(ball_count);
+                            setOut(out_count);
+                            decreaseLife();
+                            resetLifeTime();
+                            addRoundHistory({
+                                strike_count,
+                                ball_count,
+                                out_count,
+                                guess,
+                            });
+                        });
                 }
             }
         },
-        [decreaseLife, answer, life, finalScore]
+        [decreaseLife, answer, life, finalScore, addRoundHistory]
     );
 
     const scoreRecordOperation = roundHistories.map((rounds, index) => (
         <div className="scoreRecord-container">
             <div>[{index + 1} 회]</div>
             <div>입력값: {rounds.guess}</div>
-            <div>S : {rounds.strike}</div>
-            <div>B : {rounds.ball}</div>
-            <div>O : {rounds.out}</div>
+            <div>Strike : {rounds.strike_count}</div>
+            <div>Ball : {rounds.ball_count}</div>
+            <div>Out : {rounds.out_count}</div>
         </div>
     ));
 
     return (
-        <div className="container">
-            <div className="container game-section flex-column">
+        <div className="playground-container align-middle justify-center ">
+            <div className="playground-container game-section flex-column">
                 <DashBoard life={life} lifetimeSeconds={lifetimeSeconds} />
                 <UserPanel answerLength={answerLength} handleKeyPress={handleKeyPress} />
                 <ScoredBoard strike={strike} ball={ball} out={out} answerLength={answerLength} />
             </div>
-            <div className="flex-column">{scoreRecordOperation}</div>
+            <div className="score-record-operation-container border-4 rounded-2xl border-black ">
+                <div className="score-record-operation font-medium pt-3 ">{scoreRecordOperation}</div>
+            </div>
         </div>
     );
 };

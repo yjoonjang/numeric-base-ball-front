@@ -4,7 +4,12 @@
     flex-direction: row;
     justify-content: space-around;
     align-items: center;
+    width: 700px;
     margin-top: 32px;   
+}
+
+.text-mint {
+    color : #4EE87A
 }
 
 .dashboard-item {
@@ -29,4 +34,8 @@
 
 .life {
     margin-left: -8px;
+}
+
+.progress-bar-full {
+    width :1000px
 }

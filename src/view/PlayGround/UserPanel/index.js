@@ -18,7 +18,7 @@ const UserPanel = (props) => {
     return (
         <div>
             <input
-                className="userpanel-container"
+                className="userpanel-container rounded-lg border-2 border-black "
                 type="number"
                 maxLength={answerLength}
                 onInput={onUserGuessInput}

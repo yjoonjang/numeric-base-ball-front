@@ -12,7 +12,7 @@ const ScoredBoard = (props) => {
             isStrikeBallLightOn={strike > circularSignalIndex}
             isBallBallLightOn={ball > circularSignalIndex}
             isOutBallLightOn={out > circularSignalIndex}
-            color="#16db1c"
+            color="#4EE87A"
         />
     ));
 

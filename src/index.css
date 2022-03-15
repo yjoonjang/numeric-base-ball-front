@@ -1,4 +1,8 @@
-  body {
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
@@ -27,4 +31,9 @@ code {
 .flex-column {
   display: flex !important;
   flex-direction: column !important;
+}
+
+button:focus {
+  outline: 1px dotted;
+  outline: 5px auto -webkit-focus-ring-color;
 }

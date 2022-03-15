@@ -1,25 +1,113 @@
-.Ranking-container {
+.division-line {
+    width: 100%;
+    border-bottom: 3px solid rgb(232, 229, 234);
+}
+
+.width-big {
+    width : 10000px
+}
+
+.ranking-container {
     display: flex;
     width: 100%;
-    height: 100%;
+    height: 30%;
+    /* height: 100%; */
     align-items: center;
-    justify-content: space-evenly;
+    justify-content: center;
+    background-color: rgb(13, 38, 59);
 }
 
 .Ranking-form {
-    width: 480px;
-    height: 520px;
-    background-color: burlywood;
+    /* background-color: burlywood; */
     align-items: center;
     /* justify-content: space-evenly; */
-    box-shadow: 0px 0px 10px 10px rgb(235, 206, 168);
 }
 
-.Ranking-spot {
-    font-size: x-large;
+.ranking-place {
+    width: 100%;
+    height: 55%;
+    background-color: white;
+}
+
+.rank-container-wrap {
+    display: flex;
+    flex-direction: column;
+    font-size: large;
     text-align: center;
-    height: 150px;
-    /* background-color: aqua; */
+    width: 400px;
+    /* background-color: red; */
     justify-content: space-between;
-    margin-top: 80px;
+    margin-top: 120px;
+    /* padding-top: 200px; */
+    align-items: center;
+}
+
+.ranking-font {
+    font-weight: 700;
+}
+
+.BackArrow {
+    left: 500px
+}
+
+.category {
+    display: flex;
+    width: 400px;
+    justify-content: space-around;
+    /* margin-left: 100px; */
+    /* background-color: aqua; */
+    /* justify-content: space-evenly   ; */
+}
+
+.rank-score-nickname-container {
+    display: flex;
+    width: 400px;
+    /* align-items: center; */
+    justify-content: space-around;
+    margin-left: 32px;
+    /* background-color: aqua; */
+}
+
+.BackArrow {
+    margin-top: 24px;
+    width: 44px;
+    height: 44px
+}
+
+.Header {
+    padding-top: 20px;
+}
+
+/* .category-rank {
+    margin-left: 52px;
+} */
+
+.highest-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.home-circle-button {
+    background: lightblue;
+    width: 100px;
+    height: 100px;
+    border-radius: 30%;
+    position: relative;
+    left: 47%;
+    top: -50px;
+    text-align: center;
+    align-items: center;
+    font-size: x-large;
+    font-weight: 600;
+    /* box-shadow: lightblue; */
+    box-shadow: darkblue;
+}
+
+.nickname-score-space {
+    padding-right: 120px;
+}
+
+.rank-space {
+    position: absolute;
+    left: 100px
 }

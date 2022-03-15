@@ -1,7 +1,7 @@
 .validation-form-container {
     display: flex;
     flex-direction: column;
-    width:400px;
+    /* width:400px; */
     margin-left: 12px;
 }
 
@@ -13,8 +13,16 @@ input {
     width: 100%;
 }
 
+.input-box {
+    border-color: #8A8A8E !important
+}
+
 .error-message {
-    color:red;
-    font-size: small;
-    font-weight: 600;
+    color: red;
+    font-size: 14px
+}
+
+.proper-message {
+    color : #4EE87A;
+    font-size: 14px
 }
