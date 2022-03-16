@@ -11,7 +11,6 @@ const UserPanel = (props) => {
                 event.target.value = event.target.value.slice(0, answerLength);
             }
         };
-        // onUserGuessInput()
         return LengthLimit(event);
     }, []);
 

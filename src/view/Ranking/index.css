@@ -11,16 +11,13 @@
     display: flex;
     width: 100%;
     height: 30%;
-    /* height: 100%; */
     align-items: center;
     justify-content: center;
     background-color: rgb(13, 38, 59);
 }
 
 .Ranking-form {
-    /* background-color: burlywood; */
     align-items: center;
-    /* justify-content: space-evenly; */
 }
 
 .ranking-place {
@@ -35,10 +32,8 @@
     font-size: large;
     text-align: center;
     width: 400px;
-    /* background-color: red; */
     justify-content: space-between;
     margin-top: 120px;
-    /* padding-top: 200px; */
     align-items: center;
 }
 
@@ -54,18 +49,13 @@
     display: flex;
     width: 400px;
     justify-content: space-around;
-    /* margin-left: 100px; */
-    /* background-color: aqua; */
-    /* justify-content: space-evenly   ; */
 }
 
 .rank-score-nickname-container {
     display: flex;
     width: 400px;
-    /* align-items: center; */
     justify-content: space-around;
     margin-left: 32px;
-    /* background-color: aqua; */
 }
 
 .BackArrow {
@@ -77,10 +67,6 @@
 .Header {
     padding-top: 20px;
 }
-
-/* .category-rank {
-    margin-left: 52px;
-} */
 
 .highest-container {
     display: flex;
@@ -99,7 +85,6 @@
     align-items: center;
     font-size: x-large;
     font-weight: 600;
-    /* box-shadow: lightblue; */
     box-shadow: darkblue;
 }
 

@@ -34,8 +34,6 @@
     width: 320px;
     height: 48px;
     font-size: 16px;
-    /* background-color: #4EE87A; */
-    /* border-color: #8A8A8E !important */
 }
 
 .password-input-container {
@@ -63,7 +61,6 @@
     width:320px;
     height: 44px;
     font-size: 16px;
-    /* padding-top: 32px; */
     background-color: #F7F9F9;
     color: #BEC1C3
 }
@@ -132,7 +129,6 @@ input:focus {outline:none !important}
         width:320px;
         height: 44px;
         font-size: 16px;
-        /* padding-top: 32px; */
     }
 
     .login-button-container {

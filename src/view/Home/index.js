@@ -47,7 +47,6 @@ const Home = (props) => {
             <div className="flex flex-col justify-center items-center w-full h-full">
                 <div className=" flex flex-col font-bold text-8xl">
                     <div className="pt-4">Numeric Baseball</div>
-                    {/* <div>Baseball</div> */}
                 </div>
                 <div className="justify-center items-center space-y-8 ">
                     <div className="pt-20 text-2xl">

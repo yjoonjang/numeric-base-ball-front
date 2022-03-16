@@ -152,7 +152,6 @@ const PlayGround = (event) => {
                                 thirdHighestScoreNicknameList,
                             } = res.data;
                             console.log(res.data);
-                            // console.log(highestScore);
 
                             if (window.confirm('홈런! 게임을 한판 더 하시겠습니까?') === true) {
                                 history.go();
@@ -187,7 +186,6 @@ const PlayGround = (event) => {
                             guess: guess,
                         })
                         .then((res) => {
-                            // const index = res.data.length;
                             const { guess, strike_count, ball_count, out_count } = res.data[0];
                             setStrike(strike_count);
                             setBall(ball_count);
