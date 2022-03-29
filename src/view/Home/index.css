@@ -8,4 +8,9 @@
     font-size: 40px;
     font-weight: 700;
 }
-    
+
+input[type="radio"] {
+    margin-top: -4px;
+    margin-left: 4px;
+    vertical-align: middle;
+  }

@@ -29,7 +29,7 @@ export function Ranking() {
     const highestRankList = highestScoreNicknameList.map((highestScoreNickname, index) => (
         <div className=" w-full h-full flex flex-col items-center justify-center mt-8">
             <div className=" width-big text-2xl mb-8 flex justify-center space-x-10">
-                <div className="rank-space">1</div>
+                {/* <div className="rank-space">1</div> */}
                 <div className=" nickname-score-space">{highestScoreNickname}</div>
                 <div>{highestScore}</div>
             </div>
@@ -40,7 +40,7 @@ export function Ranking() {
     const secondHighestRankList = secondHighestScoreNicknameList.map((secondHighestScoreNickname, index) => (
         <div className=" w-full h-full flex flex-col items-center justify-center mt-8">
             <div className="width-big text-2xl mb-8 flex justify-center space-x-10">
-                <div className="rank-space">2</div>
+                {/* <div className="rank-space">2</div> */}
                 <div className="nickname-score-space">{secondHighestScoreNickname}</div>
                 <div>{secondHighestScore}</div>
             </div>
@@ -51,7 +51,7 @@ export function Ranking() {
     const thirdHighestRankList = thirdHighestScoreNicknameList.map((thirdHighestScoreNickname, index) => (
         <div className=" w-full h-full flex flex-col items-center justify-center mt-8">
             <div className="width-big text-2xl mb-8 flex justify-center space-x-10">
-                <div className="rank-space">3</div>
+                {/* <div className="rank-space">3</div> */}
                 <div className="nickname-score-space">{thirdHighestScoreNickname}</div>
                 <div>{thirdHighestScore}</div>
             </div>

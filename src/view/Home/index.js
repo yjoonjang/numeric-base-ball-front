@@ -48,12 +48,10 @@ const Home = (props) => {
                 <div className=" flex flex-col font-bold text-8xl">
                     <div className="pt-4">Numeric Baseball</div>
                 </div>
-                <div className="justify-center items-center space-y-8 ">
+                <div className="justify-center items-center space-y-8">
                     <div className="pt-20 text-2xl">
                         {!cookies.data ? (
-                            <button className="game-start-button" onClick={onGameStartButtonClick}>
-                                비로그인으로 게임 시작
-                            </button>
+                            <div></div>
                         ) : (
                             <button className="game-start-button" onClick={onGameStartButtonClick}>
                                 {cookies.data.nickname}님의 게임 시작
@@ -62,8 +60,8 @@ const Home = (props) => {
                     </div>
                     <div>
                         {!cookies.data ? (
-                            <div>
-                                <div className="flex flex-col">
+                            <div className="flex">
+                                <div className="flex">
                                     <button className="game-start-button" onClick={onLogin}>
                                         로그인
                                     </button>
@@ -82,7 +80,7 @@ const Home = (props) => {
                             </div>
                         )}
                     </div>
-                    <div className=" flex space-x-3 items-center justify-center">
+                    <div className=" flex space-x-10 items-center justify-center">
                         <div>
                             <label htmlFor="easy">쉬움</label>
                             <input

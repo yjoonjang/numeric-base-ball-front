@@ -41,14 +41,14 @@ const Login = (props) => {
 
     const onValidLoginButton = () => {
         if (profile.user_id && profile.user_id.length >= 5 && profile.password && profile.password.length >= 5) {
-            console.log('조건 만족');
+            console.log('조건 만족_로그인_버튼');
             return '#4EE87A';
         }
     };
 
     const onValidLoginButtonText = () => {
         if (profile.user_id && profile.user_id.length >= 5 && profile.password && profile.password.length >= 5) {
-            console.log('조건 만족');
+            console.log('조건 만족_로그인_텍스트');
             return 'black';
         }
     };
@@ -118,7 +118,7 @@ const Login = (props) => {
                                     errorMessage: '아이디가 존재하지 않습니다.',
                                 }),
                             ]}
-                            placeholder=""
+                            placeholder="아이디 (등록된 아이디: test1)"
                             onChange={(event) => setProfile({ ...profile, user_id: event.target.value })}
                         />
                     </div>
@@ -152,7 +152,7 @@ const Login = (props) => {
                                 }),
                             ]}
                             displayExpr="displayError"
-                            placeholder=""
+                            placeholder="비밀번호 (등록된 비밀번호: test1)"
                             onChange={(event) => setProfile({ ...profile, password: event.target.value })}
                         />
                     </div>

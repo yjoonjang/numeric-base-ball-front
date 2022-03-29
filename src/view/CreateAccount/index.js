@@ -32,6 +32,38 @@ const CreateAccount = (props) => {
         setCookie('data', { id, user_id, nickname }, { path: '/' });
     };
 
+    const onValidLoginButton = () => {
+        if (
+            profile.user_id &&
+            profile.user_id.length >= 5 &&
+            profile.password &&
+            profile.password.length >= 5 &&
+            profile.passwordRepeat &&
+            profile.passwordRepeat.length >= 5 &&
+            profile.nickname &&
+            profile.nickname >= 3
+        ) {
+            console.log('조건 만족_로그인_버튼');
+            return '#4EE87A';
+        }
+    };
+
+    const onValidLoginButtonText = () => {
+        if (
+            profile.user_id &&
+            profile.user_id.length >= 5 &&
+            profile.password &&
+            profile.password.length >= 5 &&
+            profile.passwordRepeat &&
+            profile.passwordRepeat.length >= 5 &&
+            profile.nickname &&
+            profile.nickname >= 3
+        ) {
+            console.log('조건 만족_로그인_텍스트');
+            return 'black';
+        }
+    };
+
     const onJoin = useCallback(() => {
         axios
             .post('http://localhost:65100/join', profile)
@@ -200,7 +232,11 @@ const CreateAccount = (props) => {
                     </button>
                 </span>
                 <div className=" login-button-container align-middle ">
-                    <button className=" login-button items-center rounded-2xl font-bold shadow-xl " onClick={onJoin}>
+                    <button
+                        className=" login-button items-center rounded-2xl font-bold shadow-xl "
+                        onClick={onJoin}
+                        style={{ backgroundColor: onValidLoginButton(), color: onValidLoginButtonText() }}
+                    >
                         LOGIN
                     </button>
                 </div>
